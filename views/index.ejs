@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Manager</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="mt-5">Task Manager</h1>
+
+        <!-- Form to Create a New Task -->
+        <form action="/api/tasks" method="POST" class="mb-4">
+            <div class="form-group">
+                <input type="text" class="form-control" name="title" placeholder="Task Title" required>
+            </div>
+            <div class="form-group">
+                <textarea class="form-control" name="description" placeholder="Task Description" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Create Task</button>
+        </form>
+
+        <h2>Existing Tasks</h2>
+        <table class="table">
+            <thead class="thead-light">
+                <tr>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% tasks.forEach(task => { %>
+                    <tr>
+                        <td><%= task.title %></td>
+                        <td><%= task.description %></td>
+                        <td>
+                            <!-- Link to the Update Page -->
+                            <a href="/tasks/<%= task.id %>" class="btn btn-warning btn-sm">Edit</a>
+                            
+                            <form action="/api/tasks/<%= task.id %>?_method=DELETE" method="POST" style="display:inline;">
+                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Bootstrap JS and dependencies (optional) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
